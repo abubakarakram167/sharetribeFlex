@@ -46,7 +46,7 @@ import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionFeaturesMaybe from './SectionFeaturesMaybe';
+import SectionFeaturePackage from './SectionFeaturePackage';
 import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
@@ -377,6 +377,7 @@ export class ListingPageComponent extends Component {
     );
 
     const amenityOptions = findOptionsForSelectFilter('amenities', filterConfig);
+    const secondaryAmenityOptions = findOptionsForSelectFilter('secondaryAmenities', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
     const category =
       publicData && publicData.category ? (
@@ -434,7 +435,9 @@ export class ListingPageComponent extends Component {
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
+                  <SectionFeaturePackage publicData={publicData} />
+                  <div>Below is a Secondary Amneity Options By me.</div>
+                  <SectionFeaturesMaybe options={secondaryAmenityOptions} publicData={publicData} />
                   <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}

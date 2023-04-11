@@ -175,7 +175,7 @@
   "EditListingDescriptionPanel.title": "Edit details of {listingTitle}",
   "EditListingFeaturesForm.showListingFailed": "Fetching listing data failed",
   "EditListingFeaturesForm.updateFailed": "Failed to update listing. Please try again.",
-  "EditListingFeaturesPanel.createListingTitle": "What amenities does your sauna have?",
+  "EditListingFeaturesPanel.createListingTitle": "What packages does your sauna have?",
   "EditListingFeaturesPanel.title": "Edit the amenities of {listingTitle}",
   "EditListingLocationForm.address": "Address",
   "EditListingLocationForm.addressNotRecognized": "We didn't recognize this location. Please try another location.",

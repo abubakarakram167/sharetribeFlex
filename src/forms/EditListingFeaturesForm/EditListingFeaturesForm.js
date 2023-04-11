@@ -50,23 +50,27 @@ const EditListingFeaturesFormComponent = props => (
       ) : null;
 
       const options = findOptionsForSelectFilter('amenities', filterConfig);
+      const secondaryAmenityOption = findOptionsForSelectFilter('secondaryAmenities', filterConfig);
+      const secondaryAmenityKey = "secondaryAmenities";
+
       return (
-        <Form className={classes} onSubmit={handleSubmit}>
-          {errorMessage}
-          {errorMessageShowListing}
-
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
-
-          <Button
-            className={css.submitButton}
-            type="submit"
-            inProgress={submitInProgress}
-            disabled={submitDisabled}
-            ready={submitReady}
-          >
-            {saveActionMsg}
-          </Button>
-        </Form>
+        <>
+          <Form className={classes} onSubmit={handleSubmit}>
+            {errorMessage}
+            {errorMessageShowListing}
+            <FieldCheckboxGroup label="Amenities" className={css.features} id={name} name={name} options={options} />
+            <FieldCheckboxGroup className={css.features} id={secondaryAmenityKey} label="Secondary Amenities" name={secondaryAmenityKey} options={secondaryAmenityOption} />
+            <Button
+              className={css.submitButton}
+              type="submit"
+              inProgress={submitInProgress}
+              disabled={submitDisabled}
+              ready={submitReady}
+            >
+              {saveActionMsg}
+            </Button>
+          </Form>
+        </>
       );
     }}
   />

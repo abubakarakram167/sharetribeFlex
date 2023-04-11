@@ -1,0 +1,7 @@
+.editButton {
+  margin-bottom: 16px;
+  background-color: #d330f0;
+  font-size: 12px;
+  min-height: 40px !important;
+  width: 70px;
+}

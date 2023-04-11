@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
-
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
+import PackageTable from '../Table/PackageTable/PackageTable';
+import MainPackageTable from '../Table/MainPackageTable/table';
 import { ListingLink } from '../../components';
-
+import Button from '../../components/Button/Button';
 import css from './EditListingFeaturesPanel.module.css';
-
-const FEATURES_NAME = 'amenities';
 
 const EditListingFeaturesPanel = props => {
   const {
@@ -27,6 +26,8 @@ const EditListingFeaturesPanel = props => {
     errors,
   } = props;
 
+  const [view, setView] = useState('main');
+  const [currentSelectedPackage, setCurrentSelectedPackage] = useState(null);
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
@@ -41,13 +42,53 @@ const EditListingFeaturesPanel = props => {
     <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
   );
 
-  const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
+  const packages = publicData && publicData.packages ? publicData.packages : [];
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingFeaturesForm
+      {view === 'main' ? ( //initial view to show all packages.
+        <>
+          <Button
+            onClick={() => {
+              setView('Secondary');
+              setCurrentSelectedPackage(null);
+            }}
+            type="primary"
+            className={css.packageButton}
+          >
+            Create Package
+          </Button>
+          <MainPackageTable
+            data={
+              publicData && publicData.packages
+                ? publicData.packages.filter(packageData => !packageData.isService)
+                : []
+            }
+            onEdit={value => {
+              setCurrentSelectedPackage(value);
+              setView('Secondary');
+            }}
+            allPackagesData={publicData.packages ? publicData.packages : []}
+          />
+        </>
+      ) : (
+        <PackageTable
+          packages={packages ? packages : []}
+          onBack={() => setView('main')}
+          parentKey={currentSelectedPackage}
+          onSave={values => {
+            var ids = new Set(packages.map(d => d.key));
+            var merged = [...packages, ...values.filter(d => !ids.has(d.key))]; // Merging all packages to display to main table and save .
+            const updatedValues = {
+              publicData: { packages: merged.length > 0 ? merged : [] },
+            };
+            onSubmit(updatedValues);
+          }}
+        />
+      )}
+
+      {/* <EditListingFeaturesForm
         className={css.form}
         name={FEATURES_NAME}
         initialValues={initialValues}
@@ -55,7 +96,7 @@ const EditListingFeaturesPanel = props => {
           const { amenities = [] } = values;
 
           const updatedValues = {
-            publicData: { amenities },
+            publicData: { amenities, packages: currentPackages },                                       // Hiding it and show the table display to show packages;
           };
           onSubmit(updatedValues);
         }}
@@ -66,7 +107,7 @@ const EditListingFeaturesPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-      />
+      /> */}
     </div>
   );
 };

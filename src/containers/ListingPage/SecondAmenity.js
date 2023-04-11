@@ -4,20 +4,20 @@ import { PropertyGroup } from '../../components';
 
 import css from './ListingPage.module.css';
 
-const SectionFeaturesMaybe = props => {
+const SecondaryAmenityMaybe = props => {
   const { options, publicData } = props;
   if (!publicData) {
     return null;
   }
 
-  const selectedOptions = publicData && publicData.amenities ? publicData.amenities : [];
+  const selectedOptions = publicData && publicData.secondaryAmenities ? publicData.secondaryAmenities : [];
   return (
     <div className={css.sectionFeatures}>
       <h2 className={css.featuresTitle}>
         <FormattedMessage id="ListingPage.featuresTitle" />
       </h2>
       <PropertyGroup
-        id="ListingPage.amenities"
+        id="ListingPage.secondaryAmenities"
         options={options}
         selectedOptions={selectedOptions}
         twoColumns={true}
@@ -26,4 +26,4 @@ const SectionFeaturesMaybe = props => {
   );
 };
 
-export default SectionFeaturesMaybe;
+export default SecondaryAmenityMaybe;
